@@ -3,8 +3,8 @@ from flask.ext.login import login_user, logout_user, current_user, login_require
 from flask.ext.sqlalchemy import get_debug_queries
 from flask.ext.babel import gettext
 from app import app, db, lm, oid, babel
-from forms import LoginForm, EditForm, PostForm, SearchForm
-from models import User, ROLE_USER, ROLE_ADMIN, Post
+from forms import LoginForm, EditForm, HouseForm, SearchForm
+from models import User, ROLE_USER, ROLE_ADMIN, House
 from datetime import datetime
 from emails import follower_notification
 from guess_language import guessLanguage
@@ -51,12 +51,12 @@ def internal_error(error):
 @app.route('/index/<int:page>', methods = ['GET', 'POST'])
 @login_required
 def index(page = 1):
-    form = PostForm()
+    form = HouseForm()
     if form.validate_on_submit():
         language = guessLanguage(form.post.data)
         if language == 'UNKNOWN' or len(language) > 5:
             language = ''
-        post = Post(body = form.post.data,
+        post = House(body = form.post.data,
             timestamp = datetime.utcnow(),
             author = g.user,
             language = language)
@@ -186,9 +186,9 @@ def unfollow(nickname):
 @app.route('/delete/<int:id>')
 @login_required
 def delete(id):
-    post = Post.query.get(id)
+    post = House.query.get(id)
     if post == None:
-        flash('Post not found.')
+        flash('House not found.')
         return redirect(url_for('index'))
     if post.author.id != g.user.id:
         flash('You cannot delete this post.')
@@ -208,7 +208,7 @@ def search():
 @app.route('/search_results/<query>')
 @login_required
 def search_results(query):
-    results = Post.query.whoosh_search(query, MAX_SEARCH_RESULTS).all()
+    results = House.query.whoosh_search(query, MAX_SEARCH_RESULTS).all()
     return render_template('search_results.html',
         query = query,
         results = results)
