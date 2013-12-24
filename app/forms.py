@@ -31,7 +31,7 @@ class EditForm(Form):
         return True
         
 class HouseForm(Form):
-    post = TextField('post', validators = [Required()])
+    house = TextField('house', validators = [Required()])
     
 class SearchForm(Form):
     search = TextField('search', validators = [Required()])

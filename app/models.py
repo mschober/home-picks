@@ -17,7 +17,7 @@ class User(db.Model):
     nickname = db.Column(db.String(64), unique = True)
     email = db.Column(db.String(120), index = True, unique = True)
     role = db.Column(db.SmallInteger, default = ROLE_USER)
-    posts = db.relationship('House', backref = 'author', lazy = 'dynamic')
+    houses = db.relationship('House', backref = 'author', lazy = 'dynamic')
     about_me = db.Column(db.String(140))
     last_seen = db.Column(db.DateTime)
     followed = db.relationship('User', 
@@ -71,7 +71,7 @@ class User(db.Model):
     def is_following(self, user):
         return self.followed.filter(followers.c.followed_id == user.id).count() > 0
 
-    def followed_posts(self):
+    def followed_houses(self):
         return House.query.join(followers, (followers.c.followed_id == House.user_id)).filter(followers.c.follower_id == self.id).order_by(House.timestamp.desc())
 
     def __repr__(self): # pragma: no cover

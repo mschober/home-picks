@@ -5,9 +5,9 @@
 <h1>{{ _('Edit Your Profile') }}</h1>
 {% include 'flash.html' %}
 <div class="well">
-    <form class="form-horizontal" action="" method="post" name="edit">
+    <form class="form-horizontal" action="" method="house" name="edit">
         {{form.hidden_tag()}}
-        <div class="control-group{% if form.errors.post %} error{% endif %}">
+        <div class="control-group{% if form.errors.house %} error{% endif %}">
             <label class="control-label" for="nickname">{{ _('Your nickname:') }}</label>
             <div class="controls">
                 {{ form.nickname(maxlength = 64, class = "span4") }}
@@ -16,7 +16,7 @@
                 {% endfor %}
             </div>
         </div>
-        <div class="control-group{% if form.errors.post %} error{% endif %}">
+        <div class="control-group{% if form.errors.house %} error{% endif %}">
             <label class="control-label" for="about_me">{{ _('About yourself:') }}</label>
             <div class="controls">
                 {{ form.about_me(cols = 64, rows = 4, class = "span4") }}
