@@ -6,8 +6,10 @@
     {% else %}
     <title>microblog</title>
     {% endif %}
+    <!-- core CSS -->
     <link href="{{ url_for('.static', filename = 'css/bootstrap.min.css') }}" rel="stylesheet" media="screen">
     <link href="{{ url_for('.static', filename = 'css/bootstrap-responsive.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('.static', filename = 'css/bootstrap-slider.css') }}" rel="stylesheet">
     <script src="http://code.jquery.com/jquery-latest.js"></script>
     <script src="{{ url_for('.static', filename = 'js/bootstrap.min.js') }}"></script>
     <script src="{{ url_for('.static', filename = 'js/moment.min.js') }}"></script>
@@ -65,5 +67,33 @@
         </div>
       </div>
     </div>   
+    <!-- core JavaScript
+    ================================================== -->
+    <script type='text/javascript' src="static/js/jquery.min.js"></script>
+    <script type='text/javascript' src="static/js/bootstrap-slider.js"></script>
+    <script type='text/javascript'>
+    	$(document).ready(function() {
+    		/* Example 1 */
+	    	$('#ex1').slider({
+          reversed: true
+	        });
+	    	$('#ex2').slider({
+          reversed: true
+	        });
+	    	$('#ex3').slider({
+          reversed: true
+	        });
+	    	$('#ex4').slider({
+          reversed: true
+	        });
+	    	$('#ex5').slider({
+          reversed: true
+	        });
+	    	$('#ex6').slider({
+          reversed: true
+	        });
+    	});
+    </script>
+    <!-- Placed at the end of the document so the pages load faster -->
   </body>
 </html>
