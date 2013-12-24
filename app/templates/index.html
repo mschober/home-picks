@@ -4,30 +4,28 @@
 {% block content %}
 <h1>{{ _('Hi, %(nickname)s!', nickname = g.user.nickname) }}</h1>
 {% include 'flash.html' %}
+
 <div class="well">
-  <input id="ex1" data-slider-id='ex1Slider' type="text" data-slider-min="0" data-slider-max="20" data-slider-step="1" data-slider-value="14" data-slider-orientation="vertical" data-slider-selection="after"/>
-  <input id="ex2" data-slider-id='ex1Slider' type="text" data-slider-min="0" data-slider-max="20" data-slider-step="1" data-slider-value="14" data-slider-orientation="vertical" data-slider-selection="after"/>
-  <input id="ex3" data-slider-id='ex1Slider' type="text" data-slider-min="0" data-slider-max="20" data-slider-step="1" data-slider-value="14" data-slider-orientation="vertical" data-slider-selection="after"/>
-  <input id="ex4" data-slider-id='ex1Slider' type="text" data-slider-min="0" data-slider-max="20" data-slider-step="1" data-slider-value="14" data-slider-orientation="vertical" data-slider-selection="after"/>
-  <input id="ex5" data-slider-id='ex1Slider' type="text" data-slider-min="0" data-slider-max="20" data-slider-step="1" data-slider-value="14" data-slider-orientation="vertical" data-slider-selection="after"/>
-  <input id="ex6" data-slider-id='ex1Slider' type="text" data-slider-min="0" data-slider-max="20" data-slider-step="1" data-slider-value="14" data-slider-orientation="vertical" data-slider-selection="after"/>
-    <!-- <form class="form-horizontal" action="" method="post" name="post">
-        {{form.hidden_tag()}}
-        <div class="control-group{% if form.errors.post %} error{% endif %}">
-            <label class="control-label" for="post">{{ _('Say something:') }}</label>
-            <div class="controls">
-                {{ form.post(size = 30, maxlength = 140) }}
-                {% for error in form.errors.post %}
-                    <span class="help-inline">[{{error}}]</span><br>
-                {% endfor %}
-            </div>
-        </div>
-        <div class="control-group">
-            <div class="controls">
-                <input class="btn btn-primary" type="submit" value="{{ _('Post!') }}">
-            </div>
-        </div>
-    </form> -->
+  <div class="row">
+    <div class="span1">
+      <input id="ex1" data-slider-id='ex1Slider' type="text" data-slider-min="0" data-slider-max="20" data-slider-step="1" data-slider-value="14" data-slider-orientation="vertical" data-slider-selection="after"/>
+    </div>
+    <div class="span1">
+      <input id="ex2" data-slider-id='ex1Slider' type="text" data-slider-min="0" data-slider-max="20" data-slider-step="1" data-slider-value="14" data-slider-orientation="vertical" data-slider-selection="after"/>
+    </div>
+    <div class="span1">
+      <input id="ex3" data-slider-id='ex1Slider' type="text" data-slider-min="0" data-slider-max="20" data-slider-step="1" data-slider-value="14" data-slider-orientation="vertical" data-slider-selection="after"/>
+    </div>
+    <div class="span1">
+      <input id="ex4" data-slider-id='ex1Slider' type="text" data-slider-min="0" data-slider-max="20" data-slider-step="1" data-slider-value="14" data-slider-orientation="vertical" data-slider-selection="after"/>
+    </div>
+    <div class="span1">
+      <input id="ex5" data-slider-id='ex1Slider' type="text" data-slider-min="0" data-slider-max="20" data-slider-step="1" data-slider-value="14" data-slider-orientation="vertical" data-slider-selection="after"/>
+    </div>
+    <div class="span1">
+      <input id="ex6" data-slider-id='ex1Slider' type="text" data-slider-min="0" data-slider-max="20" data-slider-step="1" data-slider-value="14" data-slider-orientation="vertical" data-slider-selection="after"/>
+    </div>
+  </div>
 </div>
 {% for post in posts.items %}
     {% include 'post.html' %}
