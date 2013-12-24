@@ -228,22 +228,36 @@ def translate():
 def favicon():
     return send_from_directory(os.path.join(app.root_path, 'static'), 'ico/favicon.ico')
 
-#@app.errorhandler(404)
-#def page_not_found(e):
-#    return render_template('404.html'), 404
-#
-#@app.route("/")
-#def index():
-#    return render_template('index.html')
-
 @app.route("/sliders")
+@login_required
 def sliders():
     return render_template('sliders.html')
 
 @app.route("/slider")
+@login_required
 def slider():
     return render_template('slider.html')
 
-@app.route("/house")
-def house():
-    return render_template('house.html')
+@app.route('/houses', methods = ['GET', 'POST'])
+@app.route('/houses/<int:page>', methods = ['GET', 'POST'])
+@login_required
+def houses(page = 1):
+    form = HouseForm()
+    if form.validate_on_submit():
+        language = guessLanguage(form.house.data)
+        if language == 'UNKNOWN' or len(language) > 5:
+            language = ''
+        house = House(body = form.house.data,
+            timestamp = datetime.utcnow(),
+            author = g.user,
+            language = language)
+        db.session.add(house)
+        db.session.commit()
+        flash(gettext('Your house is now live!'))
+        return redirect(url_for('index'))
+    houses = g.user.followed_houses().paginate(page, POSTS_PER_PAGE, False)
+    return render_template('houses.html',
+        title = 'Home',
+        form = form,
+        houses = houses)
+
