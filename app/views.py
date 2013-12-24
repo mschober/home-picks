@@ -1,4 +1,4 @@
-from flask import render_template, flash, redirect, session, url_for, request, g, jsonify
+from flask import render_template, flash, redirect, session, url_for, request, g, jsonify, send_from_directory
 from flask.ext.login import login_user, logout_user, current_user, login_required
 from flask.ext.sqlalchemy import get_debug_queries
 from flask.ext.babel import gettext
@@ -10,6 +10,7 @@ from emails import follower_notification
 from guess_language import guessLanguage
 from translate import microsoft_translate
 from config import POSTS_PER_PAGE, MAX_SEARCH_RESULTS, LANGUAGES, DATABASE_QUERY_TIMEOUT, WHOOSH_ENABLED
+import os
 
 @lm.user_loader
 def load_user(id):
@@ -242,3 +243,7 @@ def sliders():
 @app.route("/slider")
 def slider():
     return render_template('slider.html')
+
+@app.route("/house")
+def house():
+    return render_template('house.html')
