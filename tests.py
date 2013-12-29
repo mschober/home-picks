@@ -11,7 +11,7 @@ from datetime import datetime, timedelta
 
 from config import basedir
 from app import app, db
-from app.models import User, House
+from app.models import User, Post
 from app.translate import microsoft_translate
 
 class TestCase(unittest.TestCase):
@@ -100,10 +100,10 @@ class TestCase(unittest.TestCase):
         db.session.add(u4)
         # make four posts
         utcnow = datetime.utcnow()
-        p1 = House(body = "post from john", author = u1, timestamp = utcnow + timedelta(seconds = 1))
-        p2 = House(body = "post from susan", author = u2, timestamp = utcnow + timedelta(seconds = 2))
-        p3 = House(body = "post from mary", author = u3, timestamp = utcnow + timedelta(seconds = 3))
-        p4 = House(body = "post from david", author = u4, timestamp = utcnow + timedelta(seconds = 4))
+        p1 = Post(body = "post from john", author = u1, timestamp = utcnow + timedelta(seconds = 1))
+        p2 = Post(body = "post from susan", author = u2, timestamp = utcnow + timedelta(seconds = 2))
+        p3 = Post(body = "post from mary", author = u3, timestamp = utcnow + timedelta(seconds = 3))
+        p4 = Post(body = "post from david", author = u4, timestamp = utcnow + timedelta(seconds = 4))
         db.session.add(p1)
         db.session.add(p2)
         db.session.add(p3)
@@ -144,12 +144,12 @@ class TestCase(unittest.TestCase):
     def test_delete_post(self):
         # create a user and a post
         u = User(nickname = 'john', email = 'john@example.com')
-        p = House(body = 'test post', author = u, timestamp = datetime.utcnow())
+        p = Post(body = 'test post', author = u, timestamp = datetime.utcnow())
         db.session.add(u)
         db.session.add(p)
         db.session.commit()
         # query the post and destroy the session
-        p = House.query.get(1)
+        p = Post.query.get(1)
         db.session.remove()
         # delete the post using a new session
         db.session = db.create_scoped_session()
