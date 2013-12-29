@@ -21,7 +21,7 @@
     function translate(sourceLang, destLang, sourceId, destId, loadingId) {
         $(destId).hide();
         $(loadingId).show();
-        $.house('/translate', {
+        $.post('/translate', {
             text: $(sourceId).text(),
             sourceLang: sourceLang,
             destLang: destLang
@@ -56,7 +56,7 @@
             </ul>
           <div class="nav-collapse collapse">
             {% if g.user.is_authenticated() and g.search_enabled %}
-            <form class="navbar-search pull-right" action="{{url_for('search')}}" method="house" name="search">{{g.search_form.hidden_tag()}}{{g.search_form.search(size=20,placeholder=_('Search'),class="search-query")}}</form>
+            <form class="navbar-search pull-right" action="{{url_for('search')}}" method="post" name="search">{{g.search_form.hidden_tag()}}{{g.search_form.search(size=20,placeholder=_('Search'),class="search-query")}}</form>
             {% endif %}
           </div>
         </div>

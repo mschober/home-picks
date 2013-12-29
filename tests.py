@@ -88,7 +88,7 @@ class TestCase(unittest.TestCase):
         assert u1.followed.count() == 0
         assert u2.followers.count() == 0
         
-    def test_follow_houses(self):
+    def test_follow_posts(self):
         # make four users
         u1 = User(nickname = 'john', email = 'john@example.com')
         u2 = User(nickname = 'susan', email = 'susan@example.com')
@@ -98,12 +98,12 @@ class TestCase(unittest.TestCase):
         db.session.add(u2)
         db.session.add(u3)
         db.session.add(u4)
-        # make four houses
+        # make four posts
         utcnow = datetime.utcnow()
-        p1 = House(body = "house from john", author = u1, timestamp = utcnow + timedelta(seconds = 1))
-        p2 = House(body = "house from susan", author = u2, timestamp = utcnow + timedelta(seconds = 2))
-        p3 = House(body = "house from mary", author = u3, timestamp = utcnow + timedelta(seconds = 3))
-        p4 = House(body = "house from david", author = u4, timestamp = utcnow + timedelta(seconds = 4))
+        p1 = House(body = "post from john", author = u1, timestamp = utcnow + timedelta(seconds = 1))
+        p2 = House(body = "post from susan", author = u2, timestamp = utcnow + timedelta(seconds = 2))
+        p3 = House(body = "post from mary", author = u3, timestamp = utcnow + timedelta(seconds = 3))
+        p4 = House(body = "post from david", author = u4, timestamp = utcnow + timedelta(seconds = 4))
         db.session.add(p1)
         db.session.add(p2)
         db.session.add(p3)
@@ -123,11 +123,11 @@ class TestCase(unittest.TestCase):
         db.session.add(u3)
         db.session.add(u4)
         db.session.commit()
-        # check the followed houses of each user
-        f1 = u1.followed_houses().all()
-        f2 = u2.followed_houses().all()
-        f3 = u3.followed_houses().all()
-        f4 = u4.followed_houses().all()
+        # check the followed posts of each user
+        f1 = u1.followed_posts().all()
+        f2 = u2.followed_posts().all()
+        f3 = u3.followed_posts().all()
+        f4 = u4.followed_posts().all()
         assert len(f1) == 3
         assert len(f2) == 2
         assert len(f3) == 2
@@ -141,17 +141,17 @@ class TestCase(unittest.TestCase):
         assert f3[1].id == p3.id
         assert f4[0].id == p4.id
 
-    def test_delete_house(self):
-        # create a user and a house
+    def test_delete_post(self):
+        # create a user and a post
         u = User(nickname = 'john', email = 'john@example.com')
-        p = House(body = 'test house', author = u, timestamp = datetime.utcnow())
+        p = House(body = 'test post', author = u, timestamp = datetime.utcnow())
         db.session.add(u)
         db.session.add(p)
         db.session.commit()
-        # query the house and destroy the session
+        # query the post and destroy the session
         p = House.query.get(1)
         db.session.remove()
-        # delete the house using a new session
+        # delete the post using a new session
         db.session = db.create_scoped_session()
         db.session.delete(p)
         db.session.commit()

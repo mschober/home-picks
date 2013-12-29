@@ -53,22 +53,22 @@ def internal_error(error):
 def index(page = 1):
     form = HouseForm()
     if form.validate_on_submit():
-        language = guessLanguage(form.house.data)
+        language = guessLanguage(form.post.data)
         if language == 'UNKNOWN' or len(language) > 5:
             language = ''
-        house = House(body = form.house.data,
+        post = House(body = form.post.data,
             timestamp = datetime.utcnow(),
             author = g.user,
             language = language)
-        db.session.add(house)
+        db.session.add(post)
         db.session.commit()
-        flash(gettext('Your house is now live!'))
+        flash(gettext('Your post is now live!'))
         return redirect(url_for('index'))
-    houses = g.user.followed_houses().paginate(page, POSTS_PER_PAGE, False)
+    posts = g.user.followed_posts().paginate(page, POSTS_PER_PAGE, False)
     return render_template('index.html',
         title = 'Home',
         form = form,
-        houses = houses)
+        posts = posts)
 
 @app.route('/login', methods = ['GET', 'POST'])
 @oid.loginhandler
@@ -122,10 +122,10 @@ def user(nickname, page = 1):
     if user == None:
         flash(gettext('User %(nickname)s not found.', nickname = nickname))
         return redirect(url_for('index'))
-    houses = user.houses.paginate(page, POSTS_PER_PAGE, False)
+    posts = user.posts.paginate(page, POSTS_PER_PAGE, False)
     return render_template('user.html',
         user = user,
-        houses = houses)
+        posts = posts)
 
 @app.route('/edit', methods = ['GET', 'POST'])
 @login_required
@@ -186,16 +186,16 @@ def unfollow(nickname):
 @app.route('/delete/<int:id>')
 @login_required
 def delete(id):
-    house = House.query.get(id)
-    if house == None:
+    post = House.query.get(id)
+    if post == None:
         flash('House not found.')
         return redirect(url_for('index'))
-    if house.author.id != g.user.id:
-        flash('You cannot delete this house.')
+    if post.author.id != g.user.id:
+        flash('You cannot delete this post.')
         return redirect(url_for('index'))
-    db.session.delete(house)
+    db.session.delete(post)
     db.session.commit()
-    flash('Your house has been deleted.')
+    flash('Your post has been deleted.')
     return redirect(url_for('index'))
     
 @app.route('/search', methods = ['POST'])
